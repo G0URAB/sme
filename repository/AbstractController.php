@@ -2,53 +2,84 @@
 
 namespace Repository;
 
-require "meta\ControllerInterface.php";
-require "meta\Template.php";
-
+require $_SERVER['DOCUMENT_ROOT']."\meta\ControllerInterface.php";
 
 use Meta\ControllerInterface;
 
 abstract Class AbstractController implements ControllerInterface
 {
 
-    private $defaultTemplate;
+    private $baseTemplate;
+    private $organizationTemplate;
+    private $departmentTemplate;
+    private $segment;
+    private $segments;
+    private $segmentType;
 
-    public function __construct()
+    abstract public function redirect($template);
+    abstract public function getTemplateToRedirect();
+    abstract public function handleRequest();
+    abstract public function getManager();
+
+    public function getBaseTemplate()
     {
-        $this->defaultTemplate="meta\Template.php";
+        return $this->baseTemplate;
     }
 
-    abstract public function routeRedirect();
-
-
-    public function index()
+    public function setBaseTemplate($template)
     {
-        header("Location:".$this->defaultTemplate);
+        $this->baseTemplate=$template;
     }
 
-    public function create()
+    public function getOrganizationTemplate()
     {
-        // TODO: Implement create() method.
+        return $this->organizationTemplate;
     }
 
-    public function update($id,$segmentType)
+    public function setOrganizationTemplate($template)
     {
-        // TODO: Implement update() method.
+        $this->organizationTemplate=$template;
     }
 
-    public function delete($id,$segmentType)
+    public function getDepartmentTemplate()
     {
-        // TODO: Implement delete() method.
+        return $this->departmentTemplate;
+    }
+
+    public function setDepartmentTemplate($template)
+    {
+        $this->departmentTemplate=$template;
+    }
+
+    public function getSegment()
+    {
+        return $this->segment;
+    }
+
+    public function setSegment($segment)
+    {
+        $this->segment = $segment;
+    }
+
+    public function getSegmentType()
+    {
+        return $this->segmentType;
+    }
+
+    public function setSegmentType($type)
+    {
+        $this->segmentType=$type;
     }
 
 
-    public function getTemplate()
+    public function getSegments()
     {
-        return $this->defaultTemplate;
+        return $this->segments;
     }
 
-    public function setTemplate(string $template)
+    public function setSegments($segments): void
     {
-        $this->defaultTemplate = $template;
+        $this->segments = $segments;
     }
+
 }

@@ -1,14 +1,10 @@
 <?php
 
-require "repository\AbstractController.php";
+require $_SERVER['DOCUMENT_ROOT']."\method\Controller.php";
 
-use Repository\AbstractController;
+use method\Controller;
 
-class OrganisationController extends AbstractController{
+$controller = new Controller();
+$controller->redirect($controller->getBaseTemplate());
 
-    public function routeRedirect()
-    {
-        // TODO: Implement routeRedirect() method.
-    }
-}
 

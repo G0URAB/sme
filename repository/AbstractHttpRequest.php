@@ -2,21 +2,20 @@
 
 namespace Repository;
 
-require "meta\RequestInterface.php";
+require $_SERVER['DOCUMENT_ROOT']."\meta\RequestInterface.php";
 use Meta\RequestInterface;
 
-Class php implements RequestInterface
+abstract class AbstractHttpRequest implements RequestInterface
 {
 
     public $data;
-    public $requestType;
 
     public function __construct()
     {
         $this->data = $_REQUEST;
     }
 
-    public function requestType()
+    public function getRequestType()
     {
         //Redirect to index
         if(empty($this->data))

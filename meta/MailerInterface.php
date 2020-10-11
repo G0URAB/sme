@@ -4,10 +4,11 @@ namespace Meta;
 
 interface MailerInterface{
 
-    public function setTo($newName,$location);
-    public function setCC($newName,$location);
-    public function setFrom($newName,$location);
-    public function setSubject($newName,$location);
-    public function setMessage($newName,$location);
-    public function setContentType($newName,$location);
+    public function setTo($to);
+    public function setCC($cc);
+    public function setFrom($from);
+    public function setSubject($subject);
+    public function setMessage($msg);
+    public function setContentType($option);
+    public function sendMail();
 }

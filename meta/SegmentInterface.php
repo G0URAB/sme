@@ -5,11 +5,11 @@ namespace Meta;
 interface SegmentInterface{
     
     public function getId();
-    public function SetId();
+    public function SetId($id);
     public function getName();
-    public function setName();
+    public function setName($name);
     public function getParent();
-    public function setParent();
+    public function setParent($parent);
     public function getChildren();
-    public function setChildren();
+    public function setChildren($children);
 }

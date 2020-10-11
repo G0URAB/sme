@@ -4,7 +4,7 @@ namespace Meta;
 
 interface RequestInterface{
 
-    public function requestType();
+    public function getRequestType();
     public function get($member);
 
 }
