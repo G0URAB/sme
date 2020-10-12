@@ -2,7 +2,7 @@
 
 namespace Repository;
 
-require $_SERVER['DOCUMENT_ROOT']."\meta\SegmentInterface.php";
+require $_SERVER['DOCUMENT_ROOT'] . "\interfaces\SegmentInterface.php";
 use Meta\SegmentInterface;
 
 abstract class AbstractSegment implements SegmentInterface{

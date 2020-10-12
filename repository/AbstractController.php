@@ -2,7 +2,7 @@
 
 namespace Repository;
 
-require $_SERVER['DOCUMENT_ROOT']."\meta\ControllerInterface.php";
+require $_SERVER['DOCUMENT_ROOT'] . "\interfaces\ControllerInterface.php";
 
 use Meta\ControllerInterface;
 

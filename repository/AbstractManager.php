@@ -2,7 +2,7 @@
 
 namespace Repository;
 
-require $_SERVER['DOCUMENT_ROOT']."\meta\DatabaseManagerInterface.php";
+require $_SERVER['DOCUMENT_ROOT'] . "\interfaces\DatabaseManagerInterface.php";
 use Meta\DatabaseManagerInterface;
 use PDO;
 
