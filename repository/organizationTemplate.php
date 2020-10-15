@@ -50,13 +50,13 @@
                     <div class="department mt-2 p-1 border rounded-sm shadow-sm">
                         <h3>'.$department->getName().'</h3>
                         <ul>';
-
-                          foreach ($department->getChildren() as $child) {
-                              echo '
-                            <li>
-                               ' . $child->getName() . '
-                            </li>';
-                          }
+                          if($department->getChildren()!=null)
+                              foreach ($department->getChildren() as $child) {
+                                  echo '
+                                <li>
+                                   ' . $child->getName() . '
+                                </li>';
+                              }
                            echo '
                         </ul>
                     </div>

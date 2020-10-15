@@ -5,7 +5,7 @@ namespace Repository;
 require $_SERVER['DOCUMENT_ROOT'] . "\interfaces\RequestInterface.php";
 use Meta\RequestInterface;
 
-abstract class AbstractHttpRequest implements RequestInterface
+class HttpRequest implements RequestInterface
 {
 
     public $data;

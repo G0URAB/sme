@@ -6,7 +6,7 @@ require $_SERVER['DOCUMENT_ROOT'] . "\interfaces\DatabaseManagerInterface.php";
 use Meta\DatabaseManagerInterface;
 use PDO;
 
-abstract class AbstractManager implements DatabaseManagerInterface{
+class DatabaseManager implements DatabaseManagerInterface{
 
     private $connection;
     private $segment;
@@ -195,5 +195,15 @@ abstract class AbstractManager implements DatabaseManagerInterface{
     public function getLastInsertedId()
     {
         return $this->lastInsertedId;
+    }
+
+    public function getChildrenOfParent($parentType, $parentId)
+    {
+        $stmt = $this->getConnection()->prepare('SELECT children FROM '.$parentType.' WHERE id = ? ');
+        $stmt->execute([$parentId]);
+        $result= $stmt->fetch(PDO::FETCH_OBJ);
+        $stmt = null;
+
+        return $result;
     }
 }

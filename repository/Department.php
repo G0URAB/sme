@@ -1,8 +1,8 @@
 <?php
 
-namespace method;
+namespace Repository;
 
-require_once $_SERVER['DOCUMENT_ROOT']."\\"."repository\AbstractSegment.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "\\" . "repository\AbstractSegment.php";
 use Repository\AbstractSegment;
 
 Class Department extends AbstractSegment {

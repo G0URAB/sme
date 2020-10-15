@@ -44,45 +44,46 @@
 
             <?php
               $count =1;
-              foreach($children as $child)
-              {
-                  echo '<div class="d-flex flex-row justify-content-around mt-2 border mt-2 pb-4 pt-4 rounded-sm bg-white">
-                <form name="real-form" method="post" action="?update=participant" >
-
-                    <div class="d-flex flex-row justify-content-between">
+              if($children!=null)
+                  foreach($children as $child)
+                  {
+                      echo '<div class="d-flex flex-row justify-content-around mt-2 border mt-2 pb-4 pt-4 rounded-sm bg-white">
+                    <form name="real-form" method="post" action="?update=participant" >
     
-                        <div>'.$count.'. <b><input class="w-75 rounded-sm" type="text" name="update-name" value="'.$child->getName().'"> </b></div>
-
-                        <div class="d-flex flex-column align-content-around ml-4">
-                            <!--Text area input-->
-                            <div class="form-group">
-                                <label for="description-2">Description</label>
-                                <textarea name="lol1" class="form-control" id="description-2" rows="3"></textarea>
+                        <div class="d-flex flex-row justify-content-between">
+        
+                            <div>'.$count.'. <b><input class="w-75 rounded-sm" type="text" name="update-name" value="'.$child->getName().'"> </b></div>
+    
+                            <div class="d-flex flex-column align-content-around ml-4">
+                                <!--Text area input-->
+                                <div class="form-group">
+                                    <label for="description-2">Description</label>
+                                    <textarea name="lol1" class="form-control" id="description-2" rows="3"></textarea>
+                                </div>
+    
+                                <div>
+                                    <!--Image input -->
+                                    <div><input type="file" name="image" src="image-icon.png"></div>
+                                    <!--Submit button-->
+                                    <button type="submit" class="btn btn-success mt-1">Submit</button>
+                                </div>
                             </div>
-
-                            <div>
-                                <!--Image input -->
-                                <div><input type="file" name="image" src="image-icon.png"></div>
-                                <!--Submit button-->
-                                <button type="submit" class="btn btn-success mt-1">Submit</button>
-                            </div>
+    
                         </div>
-
+    
+                    </form>
+    
+                    <div style="width: 20%;">
+                        <h6>Image</h6>
+                        <img src="\repository\image-icon.png" style="width: 100%; height:60%; min-width: 100px;">
                     </div>
-
-                </form>
-
-                <div style="width: 20%;">
-                    <h6>Image</h6>
-                    <img src="\repository\image-icon.png" style="width: 100%; height:60%; min-width: 100px;">
-                </div>
-
-                <div>
-                    <button type="button" class="btn btn-outline-dark delete-organization-button" style="margin-top: 210%;" data-id="'.$child->getId().'" data-name="'.$child->getName().'">X</button>
-                </div>
-            </div>';
-                  $count++;
-              }
+    
+                    <div>
+                        <button type="button" class="btn btn-outline-dark delete-organization-button" style="margin-top: 210%;" data-id="'.$child->getId().'" data-name="'.$child->getName().'">X</button>
+                    </div>
+                </div>';
+                      $count++;
+                  }
             ?>
 
         </div>

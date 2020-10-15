@@ -1,32 +1,48 @@
 <?php
 
-namespace method;
+namespace Repository;
 
-require_once $_SERVER['DOCUMENT_ROOT']."\\"."repository\AbstractController.php";
-require_once $_SERVER['DOCUMENT_ROOT']."\\"."method\Request.php";
-require_once $_SERVER['DOCUMENT_ROOT']."\\"."method\DatabaseManager.php";
-require_once $_SERVER['DOCUMENT_ROOT']."\\"."method\Organization.php";
-require_once $_SERVER['DOCUMENT_ROOT']."\\"."method\Department.php";
-require_once $_SERVER['DOCUMENT_ROOT']."\\"."method\Participant.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "\interfaces\ControllerInterface.php";
+require_once $_SERVER['DOCUMENT_ROOT']."\\"."repository\HttpRequest.php";
+require_once $_SERVER['DOCUMENT_ROOT']."\\"."repository\DatabaseManager.php";
+require_once $_SERVER['DOCUMENT_ROOT']."\\"."repository\Organization.php";
+require_once $_SERVER['DOCUMENT_ROOT']."\\"."repository\Department.php";
+require_once $_SERVER['DOCUMENT_ROOT']."\\"."repository\Participant.php";
 
-use Repository\AbstractController;
-use method\Request;
-use method\DatabaseManager;
-use method\Department;
-use method\Organization;
-use method\Participant;
+use Meta\ControllerInterface;
+use Repository\DatabaseManager;
+use Repository\Department;
+use Repository\Organization;
+use Repository\Participant;
+use Repository\HttpRequest;
 
-Class Controller extends AbstractController{
+Class Controller implements ControllerInterface
+{
 
+    private $baseTemplate;
+    private $organizationTemplate;
+    private $departmentTemplate;
+    private $segment;
+    private $segments;
+    private $segmentType;
     private $request;
     private $databaseManager;
     public $parent;
     public $parentId;
 
-
-    public function __construct()
+    public function __construct($segmentType)
     {
-        $this->request = new Request();
+        $this->segmentType = $segmentType;
+        strcasecmp($this->segmentType,"organization")==0?$this->setSegment(new Organization()):
+                                           $this->setSegment(new Department());
+        $this->databaseManager = new DatabaseManager($this->getSegment());
+        $this->request = new HttpRequest();
+        $this->setTemplates();
+    }
+
+
+    public function setTemplates()
+    {
         $this->setBaseTemplate("\method\baseTemplate.php");
         $this->setOrganizationTemplate("\method\organizationTemplate.php");
         $this->setDepartmentTemplate("\method\departmentTemplate.php");
@@ -39,9 +55,6 @@ Class Controller extends AbstractController{
 
     public function handleRequest()
     {
-        $this->getSegmentType()=="organization"? $this->setSegment(new Organization()): $this->setSegment(new Department());
-        $this->databaseManager = new DatabaseManager($this->getSegment());
-
         if($this->request->get("parent-id"))
         {
             $this->parentId = $this->request->get("parent-id");
@@ -202,4 +215,66 @@ Class Controller extends AbstractController{
 
         return $templateToRedirect;
     }
+
+    public function getBaseTemplate()
+    {
+        return $this->baseTemplate;
+    }
+
+    public function setBaseTemplate($template)
+    {
+        $this->baseTemplate=$template;
+    }
+
+    public function getOrganizationTemplate()
+    {
+        return $this->organizationTemplate;
+    }
+
+    public function setOrganizationTemplate($template)
+    {
+        $this->organizationTemplate=$template;
+    }
+
+    public function getDepartmentTemplate()
+    {
+        return $this->departmentTemplate;
+    }
+
+    public function setDepartmentTemplate($template)
+    {
+        $this->departmentTemplate=$template;
+    }
+
+    public function getSegment()
+    {
+        return $this->segment;
+    }
+
+    public function setSegment($segment)
+    {
+        $this->segment = $segment;
+    }
+
+    public function getSegmentType()
+    {
+        return $this->segmentType;
+    }
+
+    public function setSegmentType($type)
+    {
+        $this->segmentType=$type;
+    }
+
+
+    public function getSegments()
+    {
+        return $this->segments;
+    }
+
+    public function setSegments($segments): void
+    {
+        $this->segments = $segments;
+    }
+
 }

@@ -1,10 +1,7 @@
 <?php
 
-require $_SERVER['DOCUMENT_ROOT']."\method\Controller.php";
+  header("Location:\method\baseTemplate.php");
 
-use method\Controller;
 
-$controller = new Controller();
-$controller->redirect($controller->getBaseTemplate());
 
 
