@@ -16,7 +16,7 @@ use Repository\Organization;
 use Repository\Participant;
 use Repository\HttpRequest;
 
-Class Controller implements ControllerInterface
+Class MethodController implements ControllerInterface
 {
 
     private $baseTemplate;
@@ -278,3 +278,4 @@ Class Controller implements ControllerInterface
     }
 
 }
+

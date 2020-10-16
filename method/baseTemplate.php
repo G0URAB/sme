@@ -1,11 +1,10 @@
 <?php
 
-require $_SERVER['DOCUMENT_ROOT'] . "\\repository\Controller.php";
+require $_SERVER['DOCUMENT_ROOT'] . "\method\MethodController.php";
 
-use Repository\Controller;
+use Repository\MethodController;
 
-$controller = new Controller("organization");
-//$controller->setSegmentType("organization");
+$controller = new MethodController("organization");
 $controller->handleRequest();
 
 
