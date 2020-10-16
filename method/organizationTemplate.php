@@ -1,10 +1,10 @@
 <?php
 
-require $_SERVER['DOCUMENT_ROOT'] . "\\repository\Controller.php";
+require $_SERVER['DOCUMENT_ROOT'] . "\method\MethodController.php";
 
-use Repository\Controller;
+use Repository\MethodController;
 
-$controller = new Controller("department");
+$controller = new MethodController("department");
 $parentId = $controller->getRequest()->get("parent-id");
 $controller->handleRequest();
 $title = $controller->parent->name;
