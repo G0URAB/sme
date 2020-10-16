@@ -1,10 +1,10 @@
 <?php
 
-require $_SERVER['DOCUMENT_ROOT'] . "\\repository\Controller.php";
+require $_SERVER['DOCUMENT_ROOT'] . "\method\MethodController.php";
 
-use Repository\Controller;
+use Repository\MethodController;
 
-$controller = new Controller("participant");
+$controller = new MethodController("participant");
 $controller->handleRequest();
 $title = $controller->parent->name;
 $children = unserialize($controller->getSegments()->children);
