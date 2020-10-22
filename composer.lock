@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "362ad6b38750db5320dcd31eb212c424",
+    "content-hash": "432f986dffaa1560599a81ff9ea19179",
     "packages": [
         {
             "name": "composer/package-versions-deprecated",
@@ -3510,12 +3510,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-client.git",
-                "reference": "d3721c5f4e906cee75de9931db603c13deeb0170"
+                "reference": "1560d7f9c6204d7833e6c239ac13b2c798ffbe46"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-client/zipball/d3721c5f4e906cee75de9931db603c13deeb0170",
-                "reference": "d3721c5f4e906cee75de9931db603c13deeb0170",
+                "url": "https://api.github.com/repos/symfony/http-client/zipball/1560d7f9c6204d7833e6c239ac13b2c798ffbe46",
+                "reference": "1560d7f9c6204d7833e6c239ac13b2c798ffbe46",
                 "shasum": ""
             },
             "require": {
@@ -3587,7 +3587,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-10-21T13:24:34+00:00"
+            "time": "2020-10-22T13:42:02+00:00"
         },
         {
             "name": "symfony/http-client-contracts",
@@ -7971,7 +7971,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "doctrine/annotations": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
