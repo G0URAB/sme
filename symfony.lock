@@ -159,6 +159,9 @@
     "symfony/css-selector": {
         "version": "5.x-dev"
     },
+    "symfony/debug": {
+        "version": "4.4.x-dev"
+    },
     "symfony/debug-bundle": {
         "version": "4.1",
         "recipe": {
@@ -495,6 +498,9 @@
     },
     "symfony/yaml": {
         "version": "5.x-dev"
+    },
+    "symfonycasts/verify-email-bundle": {
+        "version": "dev-master"
     },
     "twig/extra-bundle": {
         "version": "3.x-dev"
