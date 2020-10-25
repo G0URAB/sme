@@ -1,7 +1,29 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Business Idea{% endblock %}
 
 {% block body %}
-  <h1>Welcome home</h1>
+
+  {% for label, messages in app.flashes %}
+    {% for message in messages %}
+      <div class="alert alert-{{ label }}">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endfor %}
+
+  <div class="mt-2">
+    <h5>Welcome {{ app.user.firstName }}.</h5>
+
+    {% include('@includes/editor.html.twig') with {
+      initialText:'Write down your business idea. You can also insert business diagrams and product pictures. Click on the edit button!!',
+      actionPath:'/home',
+      deltaType:'home'
+    } %}
+  </div>
+
+{% endblock %}
+
+{% block javascripts %}
+  <script src="{{ asset("js/home.js") }}"></script>
 {% endblock %}

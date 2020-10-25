@@ -12,6 +12,12 @@
         {% endfor %}
     {% endfor %}
 
+    {% if error.message is defined %}
+        <div class="alert alert-danger">
+            {{ error.message|trans({},'security') }}
+        </div>
+    {% endif %}
+
     <div class="d-flex flex-row justify-content-center">
         <img src="{{ asset('images/bpm-logo.png') }}">
     </div>
@@ -23,12 +29,12 @@
             </div>
         {% else %}
             <div class="w-50 m-auto">
-                <h1 class="h3 mb-3 font-weight-normal">Please sign in </h1>
+                <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
                 <label for="inputEmail">Email</label>
-                <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control"
+                <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="off"
                        required autofocus>
                 <label for="inputPassword">Password</label>
-                <input type="password" name="password" id="inputPassword" class="form-control" required>
+                <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="off" required>
 
                 <input type="hidden" name="_csrf_token"
                        value="{{ csrf_token('authenticate') }}"
@@ -44,10 +50,13 @@
                         </label>
                     </div>
                 #}
-                <div class="d-flex flex-row justify-content-center">
+                <div class="d-flex flex-row justify-content-around">
                     <button class="btn btn-lg btn-dark mt-3" type="submit">
                         Log in
                     </button>
+                    <a href="{{ path('app_register') }}" class="btn btn-lg btn-dark mt-3" type="submit">
+                        Register
+                    </a>
                 </div>
             </div>
         {% endif %}

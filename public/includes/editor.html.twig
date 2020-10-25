@@ -18,15 +18,18 @@
 
 <body>
 
-  <div id="delta-container" >
+  <div id="delta-container" data-deltaType="{{ deltaType }}" data-userId="{{ app.user.home.id }}" data-actionPath="{{ actionPath }}" data-delta="{{ app.user.home.delta }}">
     <!-- Create the editor container -->
-    <div id="editor">
-      <p> Quill Editor !!</p>
+    <div id="editor" class="border border-light rounded">
+      <p> {{initialText}}</p>
     </div>
 
-    <div id="save_cancel_buttons">
-      <button id="save_delta">Save</button>
-      <button id="cancel_delta">Cancel</button>
+    <div id="edit_div"  style="float:right" class="mt-3">
+      <button class="btn btn-info" id="edit_delta">Edit</button>
+    </div>
+    <div id="save_cancel_buttons" class="mt-3">
+      <button type="button" class="btn btn-primary" id="save_delta">Save</button>
+      <button type="button" class="btn btn-danger" id="cancel_delta" >Cancel</button>
     </div>
     
   </div>
@@ -34,25 +37,25 @@
   <!-- Initialize Quill editor -->
   <script>
     
-    let image_files = [];
+    var image_files = [];
     
     function imageHandler() {
-      let image_input = document.createElement('input');
+      var image_input = document.createElement('input');
       image_input.setAttribute('type', 'file');
       image_input.click();
       image_input.onchange = function() {
-        let file = image_input.files[0];
+        var file = image_input.files[0];
         image_files.push(file.name);
-        let fd = new FormData();
+        var fd = new FormData();
         fd.append('image', file);
 
-        let xhr = new XMLHttpRequest();
+        var xhr = new XMLHttpRequest();
         xhr.open('POST', '{{ actionPath }}', true);
         xhr.onload = () => {
           if (xhr.status === 200) {
-            let obj = JSON.parse(xhr.response);
+            var obj = JSON.parse(xhr.response);
             console.log(file.name);
-            let range = quill.getSelection();
+            var range = quill.getSelection();
             quill.insertEmbed(range.index, 'image', obj.url);
             
           }
@@ -62,7 +65,7 @@
       }
 
     }
-    let toolbarOptions = [
+    var toolbarOptions = [
       ['bold', 'italic', 'underline', 'strike'], // toggled buttons
       ['blockquote', 'code-block'],
       ['image', 'video'],
@@ -76,7 +79,7 @@
       [{
         'list': 'ordered'
       }, {
-        'list': 'bullet'
+        'list': 'bulvar'
       }],
       [{
         'script': 'sub'
@@ -114,7 +117,7 @@
       ['clean'] // remove formatting button
     ];
 
-    let BaseImageFormat = Quill.import('formats/image');
+    var BaseImageFormat = Quill.import('formats/image');
     const ImageFormatAttributesList = [
       'alt',
       'height',
@@ -144,8 +147,17 @@
       }
     }
     Quill.register(ImageFormat, true);
-    let quill = new Quill('#editor', {
+    var quill = new Quill('#editor', {
     });
 
   </script>
+
+{% if app.user.home.delta is not empty %}
+  <script>
+     let delta = $("#delta-container").attr("data-delta");
+     let obj = JSON.parse(delta);
+     if((obj.ops[0].insert).length>1)
+     quill.setContents(JSON.parse(delta));
+  </script>
+{% endif %}
 

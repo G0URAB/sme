@@ -1,0 +1,3 @@
+'Invalid credentials.': 'The password you entered does not match with any users!'
+'Email could not be found.': 'No user exists with this email!'
+'Authentication failed because "App\Security\LoginFormAuthenticator::checkCredentials()" did not return true.': 'The password you entered does not match with any users!'
