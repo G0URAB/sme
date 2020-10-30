@@ -18,7 +18,7 @@
 
 <body>
 
-  <div id="delta-container" data-deltaType="{{ deltaType }}" data-userId="{{ app.user.home.id }}" data-actionPath="{{ actionPath }}" data-delta="{{ app.user.home.delta }}">
+  <div id="delta-container" data-deltaType="{{ deltaType }}" data-userId="{{ id }}" data-delta="{{ delta }}">
     <!-- Create the editor container -->
     <div id="editor" class="border border-light rounded">
       <p> {{initialText}}</p>
@@ -152,11 +152,10 @@
 
   </script>
 
-{% if app.user.home.delta is not empty %}
+{% if app.user.company is not null %}
   <script>
      let delta = $("#delta-container").attr("data-delta");
      let obj = JSON.parse(delta);
-     if((obj.ops[0].insert).length>1)
      quill.setContents(JSON.parse(delta));
   </script>
 {% endif %}

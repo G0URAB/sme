@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Home;
+use App\Entity\Company;
 use App\Service\EditorService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,7 +20,7 @@ class HomeController extends AbstractController
             if(isset($_FILES['image']))
               return $editorService->uploadImage($request);
             else if($request->request->get("type")=="new_delta")
-              return $editorService->insertDelta($request,Home::class);
+              return $editorService->insertDelta($request);
             else if($request->request->get("type")=="cancel_delta")
                 return $editorService->cancelDelta($request);
         }

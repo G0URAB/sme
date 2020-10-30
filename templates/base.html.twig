@@ -19,16 +19,22 @@
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav mr-auto" style="width:100%; display: flex; flex-direction: row; justify-content: space-around;">
                     <li class="nav-item">
-                        <a class="nav-link {% if 'home' in app.request.uri %}active{% endif %}" href="{{ path("home") }}">Home <span class="sr-only">(current)</span></a>
+                        <a class="nav-link {% if 'home' in app.request.uri %}active{% endif %}" href="{{ path("home") }}">Home<span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if 'ad' in app.request.uri %}active{% endif %}" href="#">Ads</a>
+                        <a class="nav-link {% if 'products' in app.request.uri %}active{% endif %} {% if app.user.company is empty %} disabled {% endif %}" href="{{ path("products") }}">Products </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if 'cost' in app.request.uri %}active{% endif %}" href="#">Cost</a>
+                        <a class="nav-link {% if 'ad' in app.request.uri %}active{% endif %} {% if app.user.company is empty %} disabled {% endif %}" href="#">Ads</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if 'orders' in app.request.uri %}active{% endif %}" href="#">Orders</a>
+                        <a class="nav-link {% if 'cost' in app.request.uri %}active{% endif %} {% if app.user.company is empty %} disabled {% endif %}" href="#" >Cost</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if 'orders' in app.request.uri %}active{% endif %} {% if app.user.company is empty %} disabled {% endif %}" href="#">Orders </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if 'user' in app.request.uri %}active{% endif %} {% if app.user.company is empty %} disabled {% endif %}" href="{{ path("users") }}">Users </a>
                     </li>
                     <li class="nav-item" style="width: 8%;">
                         <a class="nav-link"  href="{{ path('app_logout') }}" ><img src="{{ asset('images/logout.png') }}" style="width: 85%; height:30px"> </a>
@@ -37,11 +43,29 @@
             </div>
         </nav>
     {% endif %}
-    {% block body %}{% endblock %}
+    {% block body %}
+
+
+    {% endblock %}
+    {% block javascripts %}
+        <script src="{{ asset('js/jquery.min.js') }}"></script>
+        <script>
+            $(document).ready(function() {
+                $(".navbar-toggler").on("click", function () {
+                    let navBar = $("#navbarText");
+                    if (!navBar.is(':visible'))
+                        navBar.css({"display": "block"});
+                    else
+                        navBar.css({"display": "none"});
+                });
+            });
+        </script>
+    {% endblock %}
 </div>
 
-{% block javascripts %}
-    <script src="{{ asset('js/jquery.min.js') }}"></script>
-{% endblock %}
+
+
+
+
 </body>
 </html>

@@ -51,10 +51,10 @@ class User implements UserInterface
 
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Home", mappedBy="user", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(name="home_id", referencedColumnName="id", nullable=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Company", inversedBy="users",  cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="company_id", referencedColumnName="id", nullable=true)
      */
-    private $home;
+    private $company;
 
 
     /**
@@ -96,8 +96,10 @@ class User implements UserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
+        /*if($this->getId()!=1)*/
+          $roles[] = 'ROLE_USER';
+        /*else
+          $roles[]= 'ROLE_ADMIN';*/
         return array_unique($roles);
     }
 
@@ -187,17 +189,17 @@ class User implements UserInterface
     /**
      * @return mixed
      */
-    public function getHome()
+    public function getCompany()
     {
-        return $this->home;
+        return $this->company;
     }
 
     /**
-     * @param mixed $home
+     * @param mixed $company
      */
-    public function setHome($home): void
+    public function setCompany($company): void
     {
-        $this->home = $home;
+        $this->company = $company;
     }
 
 }

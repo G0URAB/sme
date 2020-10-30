@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\Company;
 use Doctrine\ORM\Mapping\Entity;
 use Symfony\Component\Asset\UrlPackage;
 use Symfony\Component\Asset\VersionStrategy\EmptyVersionStrategy;
@@ -47,19 +48,19 @@ Class EditorService{
         return new JsonResponse(array("status" => "Image upload success", "url" => $url));
     }
 
-    public function insertDelta(Request $request, $pageClass)
+    public function insertDelta(Request $request)
     {
-        $entity = $this->entityManager->getRepository($pageClass)
-                 ->find($request->request->get("id"));
-
+        $entity = new Company();
         $entityExist = false;
 
-        if($entity==null){
+        if($request->request->get("id")!=null){
+            $entity = $this->entityManager->getRepository(Company::class)
+                ->find($request->request->get("id"));
             $entityExist = true;
-            $entity = new $pageClass;
         }
-        $entity->setUser($this->security->getUser());
-        $this->security->getUser()->setHome($entity);
+
+        $entity->addUser($this->security->getUser());
+        $this->security->getUser()->setCompany($entity);
         $entity->setDelta($request->request->get("content"));
         if($entityExist)
             $this->entityManager->persist($entity);

@@ -24,6 +24,10 @@ $(document).ready(function () {
         var toolbar = quill.getModule('toolbar');
         toolbar.addHandler('image', imageHandler);
         window.quill.enable(true);
+
+        let data = $("#delta-container").attr("data-delta");
+        if(data==="")
+            quill.setContents(null);
     });
 
     $("#save_delta").click(function () {
@@ -72,13 +76,4 @@ $(document).ready(function () {
         });
 
     });
-
-    $(".navbar-toggler").on("click",function () {
-        let navBar = $("#navbarText");
-        if(!navBar.is(':visible'))
-          navBar.css({"display":"block"});
-        else
-          navBar.css({"display":"none"});
-    });
-
 });
