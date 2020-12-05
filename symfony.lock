@@ -245,15 +245,6 @@
             "./src/Kernel.php"
         ]
     },
-    "symfony/google-mailer": {
-        "version": "4.4",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "4.4",
-            "ref": "f8fd4ddb9b477510f8f4bce2b9c054ab428c0120"
-        }
-    },
     "symfony/http-client": {
         "version": "5.x-dev"
     },
@@ -390,30 +381,6 @@
             "./config/packages/routing.yaml",
             "./config/routes.yaml"
         ]
-    },
-    "symfony/security-bundle": {
-        "version": "5.1",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "5.1",
-            "ref": "0a4bae19389d3b9cba1ca0102e3b2bccea724603"
-        },
-        "files": [
-            "./config/packages/security.yaml"
-        ]
-    },
-    "symfony/security-core": {
-        "version": "5.x-dev"
-    },
-    "symfony/security-csrf": {
-        "version": "5.x-dev"
-    },
-    "symfony/security-guard": {
-        "version": "5.x-dev"
-    },
-    "symfony/security-http": {
-        "version": "5.x-dev"
     },
     "symfony/serializer": {
         "version": "5.x-dev"
