@@ -9,6 +9,7 @@ class FollowTheRabbit
         "The business has already been established in a small market or closed market. 
     Implement a strategy to offer your value propositions to a broader group of participants.";
 
+
     const SCENARIOS =
         [
             1=>"Amazon used to sell books only from select producers. Using this strategy, Amazon opened it's service to all the sellers who wants to sell books and maximized its profit",

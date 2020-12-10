@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hypothesis Lake{% endblock %}
+
+{% block body %}
+  <div class="card mt-2">
+    <div class="card-header">
+      Feature business model
+    </div>
+    <div class="card-body">
+      {{ form_start(form) }}
+         {{ form_row(form.nameOfBusiness) }}
+
+      {# Customer segments #}
+      <div class="card">
+        <div class="card-header">Customer Segments</div>
+
+        <div id="customer-segments" class="card-body"
+             data-prototype="{{ form_widget(form.customerSegments.vars.prototype)|e('html_attr') }}"
+             data-widget-counter="{{ form.customerSegments|length }}">
+            <button type="button" class="btn btn-primary add-customerSegment">Add customer segment!</button>
+
+        </div>
+      </div>
+
+      {{ form_end(form,{'render_rest':false}) }}
+    </div>
+  </div>
+{% endblock %}
+
+{% block javascripts %}
+ {{ parent() }}
+  <script>
+    $( document ).ready(function() {
+      $(".add-customerSegment").on("click",function () {
+          let customerSegments = $("#customer-segments");
+          let counter = customerSegments.attr("data-widget-counter");
+          let protoType = customerSegments.attr("data-prototype").replace(/__name__/g, counter);
+          customerSegments.append(protoType);
+          customerSegments.attr('data-widget-counter', parseInt(counter)+1);
+      });
+    });
+  </script>
+{% endblock %}
+
