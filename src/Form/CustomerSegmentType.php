@@ -7,6 +7,7 @@ use App\Entity\ValueProposition;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,7 +16,9 @@ class CustomerSegmentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
+            ->add('name',TextType::class,[
+                'label'=>'Name of customer-segment'
+            ])
             ->add('valuePropositions', CollectionType::class,[
                 'entry_type'=>ValuePropositionType::class,
                 'allow_add'=>true,
@@ -23,7 +26,7 @@ class CustomerSegmentType extends AbstractType
                 'by_reference' => false,
             ])
             ->add('marketingStrategy', MarketingStrategyType::class,[
-
+                'label_attr'=>['class'=>'font-weight-bold'],
             ])
         ;
     }

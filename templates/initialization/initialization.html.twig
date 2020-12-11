@@ -18,8 +18,7 @@
         <div id="customer-segments" class="card-body"
              data-prototype="{{ form_widget(form.customerSegments.vars.prototype)|e('html_attr') }}"
              data-widget-counter="{{ form.customerSegments|length }}">
-            <button type="button" class="btn btn-primary add-customerSegment">Add customer segment!</button>
-
+            <button type="button" class="btn btn-primary add-customerSegment mb-4">Add customer segment!</button>
         </div>
       </div>
 
@@ -32,12 +31,32 @@
  {{ parent() }}
   <script>
     $( document ).ready(function() {
+
       $(".add-customerSegment").on("click",function () {
           let customerSegments = $("#customer-segments");
           let counter = customerSegments.attr("data-widget-counter");
           let protoType = customerSegments.attr("data-prototype").replace(/__name__/g, counter);
+          let addMarketingStrategyTemplate = (counter) =>
+              `<button type="button"
+                data-id="${counter}"
+                id="add-new-marketing-strategy-${counter}"
+                class="btn btn-success mb-3"
+               >Add marketing strategy</button>`;
           customerSegments.append(protoType);
           customerSegments.attr('data-widget-counter', parseInt(counter)+1);
+          $("#hypothesis_customerSegments_"+counter).css({
+              'border':'1px solid #a6a3a3',
+              'border-radius':'4px',
+              'padding':'2%',
+              'margin-top':'2%'
+          });
+          let currentMarketingStrategy = $("#hypothesis_customerSegments_"+counter+"_marketingStrategy_strategies");
+          currentMarketingStrategy.append(addMarketingStrategyTemplate(counter));
+          $("#add-new-marketing-strategy-"+counter).on("click",function () {
+                let strategyCounter = (($(this).parent()).children()).length-1;
+                let strategyPrototype = currentMarketingStrategy.attr("data-prototype").replace(/__name__/g, strategyCounter);
+                currentMarketingStrategy.append(strategyPrototype);
+          });
       });
     });
   </script>

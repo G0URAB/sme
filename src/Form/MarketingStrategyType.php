@@ -19,31 +19,37 @@ class MarketingStrategyType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('name',ChoiceType::class,[
-            'choices'=>[
-                'Follow the rabbit'=>MarketingStrategy::FOLLOW_THE_RABBIT,
-                'Big bang'=>MarketingStrategy::BIG_BANG,
-                'Piggy back'=>MarketingStrategy::PIGGY_BACK,
-                'Marquee'=>MarketingStrategy::MARQUEE
-            ],
-            'placeholder'=>'Select a marketing strategy'
-        ])
-        ->add('strategies',CollectionType::class,[
-                 'entry_type'=>TextType::class,
-                 'allow_add'=>true,
-                 'allow_delete'=>true
+            ->add('name', ChoiceType::class, [
+                'label'=>'Strategy type',
+                'choices' => [
+                    'Follow the rabbit' => MarketingStrategy::FOLLOW_THE_RABBIT,
+                    'Big bang' => MarketingStrategy::BIG_BANG,
+                    'Piggy back' => MarketingStrategy::PIGGY_BACK,
+                    'Marquee' => MarketingStrategy::MARQUEE
+                ],
+                'placeholder' => 'Select a marketing strategy type'
+            ])
+            ->add('description', TextareaType::class, [
+                'label'=>'Strategy description',
+                'disabled' => true,
+                'trim'=>true,
+                'data' => 'Select a marketing strategy to see the description :)'
+            ])
+            ->add('examples', TextareaType::class, [
+                'label'=>'Strategy examples',
+                'disabled' => true,
+                'trim'=>true,
+                'data' => 'Select a marketing strategy to see the examples :)'
+            ])
+            ->add('strategies', CollectionType::class, [
+                'label'=>'What is your marketing strategy for this customer-segment?',
+                'entry_type' => TextType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'entry_options' => [
+                    'label'     => false,
+                ],
             ]);
-
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-
-            $form = $event->getForm();
-            $strategy = $event->getData();
-            dump($strategy);
-            $form->add('description', TextareaType::class, [
-                'disabled'=>true,
-                'data'=>"LOL"
-            ]);
-        });
 
     }
 
