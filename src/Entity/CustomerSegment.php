@@ -37,14 +37,15 @@ class CustomerSegment
     private $valuePropositions;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\MarketingStrategy", inversedBy="customerSegment", cascade={"persist"})
-     * @JoinColumn(name="marketingStrategy_id", referencedColumnName="id")
+     * @ORM\OneToMany(targetEntity="App\Entity\MarketingStrategy", mappedBy="customerSegment", cascade={"persist","remove"})
+     * @JoinColumn(name="marketingStrategies", referencedColumnName="id")
      */
-    private $marketingStrategy;
+    private $marketingStrategies;
 
     public function __construct()
     {
         $this->valuePropositions = new ArrayCollection();
+        $this->marketingStrategies = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -93,20 +94,20 @@ class CustomerSegment
         $this->hypothesisLake = $hypothesisLake;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getMarketingStrategy()
+    public function getMarketingStrategies()
     {
-        return $this->marketingStrategy;
+        return $this->valuePropositions;
     }
 
-    /**
-     * @param mixed $marketingStrategy
-     */
-    public function setMarketingStrategy($marketingStrategy)
+    public function removeMarketingStrategy($strategy)
     {
-        $this->marketingStrategy = $marketingStrategy;
+        $this->marketingStrategies->removeElement($strategy);
     }
 
+    public function addMarketingStrategy(MarketingStrategy $strategy): void
+    {
+        $strategy->setCustomerSegment($this);
+        if(!$this->marketingStrategies->contains($strategy))
+            $this->marketingStrategies->add($strategy);
+    }
 }

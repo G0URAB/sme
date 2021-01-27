@@ -11,6 +11,16 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class HypothesisLake
 {
+
+    const BUSINESS_TYPES= [
+      0 => 'B2C Hardware business',
+      1 => 'B2C Software business',
+      2 => 'B2C Service business',
+      3 => 'B2B Hardware business',
+      4 => 'B2B Software business',
+      5 => 'B2B Service business',
+    ];
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -19,9 +29,19 @@ class HypothesisLake
     private $id;
 
     /**
+     * @ORM\Column(type="integer", length=100, nullable=false)
+     */
+    private $phase;
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $nameOfBusiness;
+
+    /**
+     * @ORM\Column(type="integer", length=255, nullable=false)
+     */
+    private $businessType;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\CustomerSegment", mappedBy="hypothesisLake")
@@ -72,6 +92,38 @@ class HypothesisLake
     public function setNameOfBusiness($nameOfBusiness): void
     {
         $this->nameOfBusiness = $nameOfBusiness;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPhase()
+    {
+        return $this->phase;
+    }
+
+    /**
+     * @param mixed $phase
+     */
+    public function setPhase($phase)
+    {
+        $this->phase = $phase;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBusinessType()
+    {
+        return $this->businessType;
+    }
+
+    /**
+     * @param mixed $businessType
+     */
+    public function setBusinessType($businessType)
+    {
+        $this->businessType = $businessType;
     }
 
 }

@@ -3,62 +3,111 @@
 {% block title %}Hypothesis Lake{% endblock %}
 
 {% block body %}
-  <div class="card mt-2">
-    <div class="card-header">
-      Feature business model
-    </div>
-    <div class="card-body">
-      {{ form_start(form) }}
-         {{ form_row(form.nameOfBusiness) }}
-
-      {# Customer segments #}
-      <div class="card">
-        <div class="card-header">Customer Segments</div>
-
-        <div id="customer-segments" class="card-body"
-             data-prototype="{{ form_widget(form.customerSegments.vars.prototype)|e('html_attr') }}"
-             data-widget-counter="{{ form.customerSegments|length }}">
-            <button type="button" class="btn btn-primary add-customerSegment mb-4">Add customer segment!</button>
+    <div class="card mt-3">
+        <div class="card-header">
+            Initialize a feature business model
         </div>
-      </div>
+        <div class="card-body">
+            {{ form_start(form) }}
+            {{ form_row(form.phase,{'label':'Adaptation phase'}) }}
+            {{ form_row(form.nameOfBusiness) }}
+            {{ form_row(form.businessType) }}
 
-      {{ form_end(form,{'render_rest':false}) }}
+            {# Customer segments #}
+            <div class="card">
+                <div class="card-header">Customer Segments</div>
+
+                <div id="customer-segments" class="card-body"
+                     data-prototype="{{ form_widget(form.customerSegments.vars.prototype)|e('html_attr') }}"
+                     data-widget-counter="{{ form.customerSegments|length }}">
+                    <button type="button" class="btn btn-primary add-customerSegment mb-4">Add customer segment!!
+                    </button>
+                </div>
+            </div>
+
+            {{ form_end(form,{'render_rest':false}) }}
+        </div>
     </div>
-  </div>
 {% endblock %}
 
 {% block javascripts %}
- {{ parent() }}
-  <script>
-    $( document ).ready(function() {
+    {{ parent() }}
+    <script>
+        $(document).ready(function () {
 
-      $(".add-customerSegment").on("click",function () {
-          let customerSegments = $("#customer-segments");
-          let counter = customerSegments.attr("data-widget-counter");
-          let protoType = customerSegments.attr("data-prototype").replace(/__name__/g, counter);
-          let addMarketingStrategyTemplate = (counter) =>
-              `<button type="button"
+            //Add a new marketing strategy for this customer
+            $(".add-customerSegment").on("click", function () {
+                let customerSegments = $("#customer-segments");
+                let customerSegmentCounter = customerSegments.attr("data-widget-counter");
+                let protoType = customerSegments.attr("data-prototype").replace(/__name__/g, customerSegmentCounter);
+                let addMarketingStrategyButtonTemplate = (counter) =>
+                    `<button type="button"
                 data-id="${counter}"
                 id="add-new-marketing-strategy-${counter}"
                 class="btn btn-success mb-3"
                >Add marketing strategy</button>`;
-          customerSegments.append(protoType);
-          customerSegments.attr('data-widget-counter', parseInt(counter)+1);
-          $("#hypothesis_customerSegments_"+counter).css({
-              'border':'1px solid #a6a3a3',
-              'border-radius':'4px',
-              'padding':'2%',
-              'margin-top':'2%'
-          });
-          let currentMarketingStrategy = $("#hypothesis_customerSegments_"+counter+"_marketingStrategy_strategies");
-          currentMarketingStrategy.append(addMarketingStrategyTemplate(counter));
-          $("#add-new-marketing-strategy-"+counter).on("click",function () {
-                let strategyCounter = (($(this).parent()).children()).length-1;
-                let strategyPrototype = currentMarketingStrategy.attr("data-prototype").replace(/__name__/g, strategyCounter);
-                currentMarketingStrategy.append(strategyPrototype);
-          });
-      });
-    });
-  </script>
+                customerSegments.append(protoType);
+                customerSegments.attr('data-widget-counter', parseInt(customerSegmentCounter) + 1);
+
+                let removeCustomerSegmentButtonTemplate = (counter) =>
+                    `<div class="d-flex flex-row justify-content-end">
+                      <button style="margin-bottom: 2%;" type="button" data-counter="${counter}" id="remove-CustomerSegment-${counter}" class="btn btn-danger" >Remove customer segment</button>
+                    </div>`;
+                let currentCustomerSegment = $("#hypothesis_customerSegments_" + customerSegmentCounter);
+                currentCustomerSegment.append(removeCustomerSegmentButtonTemplate(customerSegmentCounter));
+
+                currentCustomerSegment.css({
+                    'border': '1px solid rgb(140, 210, 110)',
+                    'border-radius': '4px',
+                    'padding': '2%',
+                    'margin-top': '2%'
+                });
+
+                let currentCustomerSegmentMarketingStrategy = $("#hypothesis_customerSegments_" + customerSegmentCounter + "_marketingStrategy");
+                currentCustomerSegmentMarketingStrategy.append(addMarketingStrategyButtonTemplate(customerSegmentCounter));
+                $("#remove-CustomerSegment-" + customerSegmentCounter).on("click", function () {
+                    currentCustomerSegment.remove();
+                });
+
+                //Add a new marketing strategy for this customer
+                $("#add-new-marketing-strategy-" + customerSegmentCounter).on("click", function () {
+                    let strategyCounter = (($(this).parent()).children()).length - 1;
+                    let strategyPrototype = currentCustomerSegmentMarketingStrategy.attr("data-prototype").replace(new RegExp("_marketingStrategy_" + customerSegmentCounter, "g"), "_marketingStrategy_" + strategyCounter);
+                    //strategyPrototype = strategyPrototype.replace(new RegExp("\\[strategies\\]\\[" + customerSegmentCounter + "\\]", "g"), "[strategies][" + strategyCounter + "]");
+                    //let label_for = "hypothesis_customerSegments_"+customerSegmentCounter+"_marketingStrategy_strategies_"+strategyCounter;
+                    currentCustomerSegmentMarketingStrategy.append(strategyPrototype);
+                    //$("label[for='"+label_for+"']").text("Strategy-"+parseInt(strategyCounter+1));
+                    $("#hypothesis_customerSegments_" + customerSegmentCounter + "_marketingStrategy_" + strategyCounter).css({
+                        'border': '1px solid #a6a3a3',
+                        'border-radius': '4px',
+                        'padding': '2%',
+                        'margin-top': '2%'
+                    });
+
+                    //Ajax request for strategy-description and strategy-examples
+                    $("#hypothesis_customerSegments_" + customerSegmentCounter + "_marketingStrategy_" + strategyCounter + "_type").on("change", function () {
+                        let strategyType = $(this).find(":selected").val();
+                        $.ajax({
+                            type: "POST",
+                            url: '{{ path('strategy_helper') }}',
+                            data: {
+                                'strategyType': strategyType,
+                            },
+                            success: function (response) {
+                                let msg = JSON.parse(JSON.stringify(response));
+                                if (msg.status === true) {
+                                    console.log(msg.text);
+                                    $("#hypothesis_customerSegments_"+customerSegmentCounter+"_marketingStrategy_"+strategyCounter+"_description").text(msg.strategy_description);
+                                    $("#hypothesis_customerSegments_"+customerSegmentCounter+"_marketingStrategy_"+strategyCounter+"_examples").text(msg.strategy_examples);
+                                } else
+                                    console.log(msg.text);
+                            },
+                        });
+                    });
+                });
+
+            });
+        });
+    </script>
 {% endblock %}
 

@@ -19,7 +19,7 @@ class MarketingStrategyType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', ChoiceType::class, [
+            ->add('type', ChoiceType::class, [
                 'label'=>'Strategy type',
                 'choices' => [
                     'Follow the rabbit' => MarketingStrategy::FOLLOW_THE_RABBIT,
@@ -33,22 +33,19 @@ class MarketingStrategyType extends AbstractType
                 'label'=>'Strategy description',
                 'disabled' => true,
                 'trim'=>true,
-                'data' => 'Select a marketing strategy to see the description :)'
+                'data' => 'Select a marketing strategy type to see the description :)'
             ])
             ->add('examples', TextareaType::class, [
                 'label'=>'Strategy examples',
                 'disabled' => true,
                 'trim'=>true,
-                'data' => 'Select a marketing strategy to see the examples :)'
+                'data' => 'Select a marketing strategy type to see the examples :)'
             ])
-            ->add('strategies', CollectionType::class, [
-                'label'=>'What is your marketing strategy for this customer-segment?',
-                'entry_type' => TextType::class,
-                'allow_add' => true,
-                'allow_delete' => true,
-                'entry_options' => [
-                    'label'     => false,
-                ],
+            ->add('name', TextType::class, [
+                'label'=>'Specify an action for this marketing strategy?',
+            ])
+            ->add('channel', TextType::class, [
+                'label'=>'What channel are you going to use for this strategy? E.g Google, Facebook',
             ]);
 
     }

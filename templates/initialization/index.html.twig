@@ -3,5 +3,89 @@
 {% block title %}Business Model Processing{% endblock %}
 
 {% block body %}
-  <h2 class="text-center mt-5">There is no business model at this time. Please initialize one!!!</h2>
+  <div class="card mt-4">
+    <div class="card-header">
+      Hypothesis Lake
+    </div>
+    <div class="card-body">
+
+      <table class="table m-auto">
+        <thead class="bg-light">
+        <tr>
+          <th scope="col">Phase</th>
+          <th scope="col">Feature models</th>
+          <th scope="col">Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>Phase-1</td>
+          <td><a href="#">Lake-1</a></td>
+          <td class="text-danger">Disapproved</td>
+        </tr>
+        <tr>
+          <td>Phase-2</td>
+          <td><a href="#">Lake-2</a></td>
+          <td class="text-success">In progress</td>
+        </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+
+  <div class="card mt-4">
+    <div class="card-header">
+      Experimentation Island
+    </div>
+
+    <div class="card-body">
+      <div>
+        <h5>Current Phase:</h5>
+        <select class="custom-select" name="phases" id="phases">
+          <option value="1">Phase-1</option>
+          <option value="2" selected>Phases-2</option>
+        </select>
+      </div>
+
+      <table class="table mt-2">
+        <thead class="bg-light">
+        <tr>
+          <th scope="col">Phase</th>
+          <th scope="col">Test Card</th>
+          <th scope="col">Hypothesis</th>
+          <th scope="col">Cost of testing</th>
+          <th scope="col">Evidence</th>
+          <th scope="col">Learning</th>
+          <th scope="col">Status</th>
+          <th scope="col">ToDo</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>Phase-1</td>
+          <td>Customer Interview</td>
+          <td>Value Proposition: Cheaper shoes</td>
+          <td>Food and transportation cost per person: 30 $</td>
+          <td> 2/5 </td>
+          <td>
+            Shoes are cheaper but searching does not show the right results
+          </td>
+          <td class="text-success"> Validated </td>
+          <td> <span class="bg-primary">New value proposition:</span> Advanced search algorithm</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card mt-4">
+    <div class="card-header">
+      Current feature model
+    </div>
+    <div class="card-body">
+      <img class="w-100" src="{{ asset('images/feature-model.JPG') }}">
+    </div>
+  </div>
+
 {% endblock %}

@@ -17,16 +17,26 @@ class CustomerSegmentType extends AbstractType
     {
         $builder
             ->add('name',TextType::class,[
+                'label_attr'=>['class'=>'font-weight-bold'],
                 'label'=>'Name of customer-segment'
             ])
             ->add('valuePropositions', CollectionType::class,[
+                'label'=>"Which solution are you proposing for a customer's problem?",
+                'label_attr'=>['class'=>'font-weight-bold'],
                 'entry_type'=>ValuePropositionType::class,
                 'allow_add'=>true,
                 'allow_delete'=>true,
                 'by_reference' => false,
             ])
-            ->add('marketingStrategy', MarketingStrategyType::class,[
+            ->add('marketingStrategy', CollectionType::class,[
                 'label_attr'=>['class'=>'font-weight-bold'],
+                'entry_type'=>MarketingStrategyType::class,
+                'allow_add'=>true,
+                'allow_delete'=>true,
+                'by_reference' => false,
+                'entry_options'=>[
+                    'label'=>false,
+                ]
             ])
         ;
     }
